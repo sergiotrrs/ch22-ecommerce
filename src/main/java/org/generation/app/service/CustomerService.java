@@ -36,9 +36,11 @@ public class CustomerService implements ICustomerService {
 	@Override
 	public Customer setCustomer(Customer customer) {
 		
-	if ( existCustomerByEmail(customer.getEmail() ) )
-			throw new IllegalStateException("User does exist with email: " + customer.getEmail());
-			
+		if ( existCustomerByEmail(customer.getEmail() ) )
+			throw new IllegalStateException("The user already exists with email: " + customer.getEmail());
+		else if ( customer.getEmail().length() > Customer.FIELD_MAX_LENGTH )
+			throw new IllegalStateException("Email length is greater than: " + Customer.FIELD_MAX_LENGTH);
+
 		Customer newCustomer = customer;
 		newCustomer.setActive(true);
 		
