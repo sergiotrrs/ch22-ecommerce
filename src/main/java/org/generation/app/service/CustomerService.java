@@ -33,4 +33,13 @@ public class CustomerService implements ICustomerService {
 				new IllegalStateException("User does not exist with id: " + idCustomer));
 	}
 
+	@Override
+	public Customer setCustomer(Customer customer) {
+		
+		Customer newCustomer = customer;
+		newCustomer.setActive(true);
+		
+		return customerRepository.save(newCustomer);
+	}
+
 }

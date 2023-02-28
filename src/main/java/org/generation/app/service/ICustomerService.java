@@ -11,5 +11,7 @@ public interface ICustomerService {
 	public List<Customer> getAllActiveCustomers();
 	
 	public Customer getCustomerById(long idCustomer);
+	
+	public Customer setCustomer(Customer customer);
 
 }
