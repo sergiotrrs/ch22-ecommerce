@@ -36,10 +36,18 @@ public class CustomerService implements ICustomerService {
 	@Override
 	public Customer setCustomer(Customer customer) {
 		
+	if ( existCustomerByEmail(customer.getEmail() ) )
+			throw new IllegalStateException("User does exist with email: " + customer.getEmail());
+			
 		Customer newCustomer = customer;
 		newCustomer.setActive(true);
 		
 		return customerRepository.save(newCustomer);
+	}
+
+	@Override
+	public boolean existCustomerByEmail(String email) {
+		return customerRepository.existsByEmail(email);
 	}
 
 }

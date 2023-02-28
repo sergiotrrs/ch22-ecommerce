@@ -12,6 +12,8 @@ public interface ICustomerService {
 	
 	public Customer getCustomerById(long idCustomer);
 	
+	public boolean existCustomerByEmail(String email);
+	
 	public Customer setCustomer(Customer customer);
 
 }
