@@ -6,6 +6,7 @@ import org.generation.app.model.Customer;
 import org.generation.app.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,6 +25,11 @@ public class CustomerController {
 	@GetMapping("active") //localhost:8080/api/customers/active
 	public List<Customer> getAllActiveCustomers(){
 		return customerService.getAllActiveCustomers();
+	}
+	
+	@GetMapping("{id}") //localhost:8080/api/cusytomers/2
+	public Customer getCustomerById(@PathVariable("id") long idCustomer) {
+		return customerService.getCustomerById(idCustomer);
 	}
 	
 	

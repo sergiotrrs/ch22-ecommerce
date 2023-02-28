@@ -9,5 +9,7 @@ public interface ICustomerService {
 	public List<Customer> getAllCustomers();
 	
 	public List<Customer> getAllActiveCustomers();
+	
+	public Customer getCustomerById(long idCustomer);
 
 }
