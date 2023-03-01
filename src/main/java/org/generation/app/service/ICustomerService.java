@@ -15,5 +15,7 @@ public interface ICustomerService {
 	public boolean existCustomerByEmail(String email);
 	
 	public Customer setCustomer(Customer customer);
+	
+	public Customer updateCustomer(Customer customer);
 
 }

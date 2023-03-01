@@ -42,9 +42,28 @@ public class CustomerService implements ICustomerService {
 			throw new IllegalStateException("Email length is greater than: " + Customer.FIELD_MAX_LENGTH);
 
 		Customer newCustomer = customer;
+		newCustomer.setIdCustomer(0);
 		newCustomer.setActive(true);
 		
 		return customerRepository.save(newCustomer);
+	}
+
+	@Override
+	public Customer updateCustomer(Customer newDataCustomer) {
+		if ( !existCustomerByEmail(newDataCustomer.getEmail() ) )
+			throw new IllegalStateException("The user does not exist with email: " + newDataCustomer.getEmail());
+		else if ( newDataCustomer.getEmail().length() > Customer.FIELD_MAX_LENGTH )
+			throw new IllegalStateException("Email length is greater than: " + Customer.FIELD_MAX_LENGTH);
+
+		// Obtener los datos actuales del cliente
+		Customer customer = getCustomerById(newDataCustomer.getIdCustomer());
+		//Actualizar los datos permitidos
+		customer.setFirstName( newDataCustomer.getFirstName() );
+		customer.setLastName( newDataCustomer.getLastName() );
+		customer.setAvatar( newDataCustomer.getAvatar() );
+		customer.setPassword( newDataCustomer.getPassword() );
+			
+		return customerRepository.save(customer);
 	}
 
 	@Override
@@ -52,4 +71,5 @@ public class CustomerService implements ICustomerService {
 		return customerRepository.existsByEmail(email);
 	}
 
+	
 }
