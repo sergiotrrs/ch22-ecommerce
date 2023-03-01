@@ -2,10 +2,8 @@ package org.generation.app.controller;
 
 import java.util.List;
 
-import org.generation.app.model.Address;
-import org.generation.app.model.Customer;
-import org.generation.app.service.IAddressService;
-import org.generation.app.service.ICustomerService;
+import org.generation.app.model.*;
+import org.generation.app.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -79,5 +77,9 @@ public class AddressController {
 		}
 	}	
 	
+	@GetMapping("/customer/{id}") //localhost:8080/api/addresses/customer/2
+	public List<Address> getAllAddressesByFkIdCustomer(@PathVariable("id") long idCustomer){
+		return addressService.getAllAddressesByFkIdCustomer(idCustomer);
+	}
 	
 }

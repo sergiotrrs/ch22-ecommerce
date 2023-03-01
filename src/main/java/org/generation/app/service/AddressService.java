@@ -50,8 +50,8 @@ public class AddressService implements IAddressService {
 
 	@Override
 	public List<Address> getAllAddressesByFkIdCustomer(long idCustomer) {
-		return addressRepository.findAllByFkIdCustomer(idCustomer);
-		
+		return addressRepository.findAllByFkIdCustomerIdCustomer(idCustomer);
+								
 	}
 
 }

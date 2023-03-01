@@ -7,6 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface IAddressRepository extends CrudRepository<Address, Long>  {
 	
-		List<Address> findAllByFkIdCustomer(long idCustomer);
+	//Buscar todas las direcciones por el id del cliente.
+		List<Address> findAllByFkIdCustomerIdCustomer(long idCustomer);
+		List<Address> findAllByZipCode(String ZipCode);
 
 }
