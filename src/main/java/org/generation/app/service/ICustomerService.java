@@ -17,5 +17,7 @@ public interface ICustomerService {
 	public Customer setCustomer(Customer customer);
 	
 	public Customer updateCustomer(Customer customer);
+	
+	public String deleteCustomerById(long idCustomer);
 
 }

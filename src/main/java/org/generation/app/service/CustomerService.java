@@ -71,5 +71,12 @@ public class CustomerService implements ICustomerService {
 		return customerRepository.existsByEmail(email);
 	}
 
+	@Override
+	public String deleteCustomerById(long idCustomer) {
+		Customer customer = getCustomerById(idCustomer);		
+		customerRepository.delete(customer);
+		return "The user was delete with id " + idCustomer;					
+	}
+
 	
 }

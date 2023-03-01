@@ -7,6 +7,7 @@ import org.generation.app.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,6 +70,16 @@ public class CustomerController {
 	}
 
 	
+	@DeleteMapping("{id}") //localhost:8080/api/customers/2
+	public ResponseEntity<?> deleteCustomerById(@PathVariable("id") long idCustomer) {
+		try {
+			return new ResponseEntity<String>(
+					customerService.deleteCustomerById(idCustomer), 
+					HttpStatus.OK);													
+		} catch (IllegalStateException e) {
+			return new ResponseEntity<String>(e.getMessage() , HttpStatus.NOT_FOUND );
+		}
+	}	
 	
 	
 }
