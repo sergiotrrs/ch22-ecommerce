@@ -74,7 +74,9 @@ public class CustomerService implements ICustomerService {
 	@Override
 	public String deleteCustomerById(long idCustomer) {
 		Customer customer = getCustomerById(idCustomer);		
-		customerRepository.delete(customer);
+		//customerRepository.delete(customer); //Elimna el registro
+		customer.setActive(false);		
+		customerRepository.save(customer);
 		return "The user was delete with id " + idCustomer;					
 	}
 
