@@ -2,6 +2,7 @@ package org.generation.app.controller;
 
 import java.util.List;
 
+import org.generation.app.dto.CustomerDto;
 import org.generation.app.model.Customer;
 import org.generation.app.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,8 @@ public class CustomerController {
 	@GetMapping("{id}") //localhost:8080/api/customers/2
 	public ResponseEntity<?> getCustomerById(@PathVariable("id") long idCustomer) {
 		try {
-			return new ResponseEntity<Customer>(
-					customerService.getCustomerById(idCustomer), 
+			return new ResponseEntity<CustomerDto>(
+					customerService.getCustomerDtoById(idCustomer), 
 					HttpStatus.OK);													
 		} catch (IllegalStateException e) {
 			return new ResponseEntity<String>(e.getMessage() , HttpStatus.NOT_FOUND );

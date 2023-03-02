@@ -2,6 +2,7 @@ package org.generation.app.service;
 
 import java.util.List;
 
+import org.generation.app.dto.CustomerDto;
 import org.generation.app.model.Customer;
 import org.generation.app.repository.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,23 @@ public class CustomerService implements ICustomerService {
 	public Customer getCustomerById(long idCustomer) {		
 		return customerRepository.findById(idCustomer)
 				.orElseThrow( ()-> 
-				new IllegalStateException("User does not exist with id: " + idCustomer));
+				new IllegalStateException("User does not exist with id: " + idCustomer));		
 	}
+	
+	@Override
+	public CustomerDto getCustomerDtoById(long idCustomer) {		
+		Customer customer = customerRepository.findById(idCustomer)
+				.orElseThrow( ()-> 
+				new IllegalStateException("User does not exist with id: " + idCustomer));		
+		CustomerDto customerDto = new CustomerDto();
+		customerDto.setFirstName(  customer.getFirstName()  );
+		customerDto.setLastName(  customer.getLastName()  );
+		customerDto.setEmail(  customer.getEmail()  );
+		customerDto.setAvatar(  customer.getAvatar()  );
+		
+		 return customerDto;
+	}
+	
 
 	@Override
 	public Customer setCustomer(Customer customer) {
