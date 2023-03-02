@@ -25,8 +25,8 @@ public class CustomerController {
 	ICustomerService customerService;
 	
 	@GetMapping //localhost:8080/api/customers
-	public List<Customer> getAllCustomers(){
-		return customerService.getAllCustomers();		
+	public List<CustomerDto> getAllCustomers(){
+		return customerService.getAllCustomersDto();		
 	}
 	
 	@GetMapping("active") //localhost:8080/api/customers/active

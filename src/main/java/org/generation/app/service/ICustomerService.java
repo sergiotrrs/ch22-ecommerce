@@ -8,6 +8,7 @@ import org.generation.app.model.Customer;
 public interface ICustomerService {
 	
 	public List<Customer> getAllCustomers();
+	public List<CustomerDto> getAllCustomersDto();
 	
 	public List<Customer> getAllActiveCustomers();
 	

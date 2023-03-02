@@ -1,6 +1,8 @@
 package org.generation.app.service;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.generation.app.dto.CustomerDto;
 import org.generation.app.model.Customer;
@@ -25,6 +27,17 @@ public class CustomerService implements ICustomerService {
 	public List<Customer> getAllCustomers() {
 		List<Customer> allCustomers = (List<Customer>) customerRepository.findAll();
 		return allCustomers  ;
+	}
+	
+	@Override
+	public List<CustomerDto> getAllCustomersDto() {
+		List<Customer> allCustomers = (List<Customer>) customerRepository.findAll();
+		
+		List<CustomerDto> customerDto = allCustomers.stream()
+				.map( customer -> modelMapper.map(customer, CustomerDto.class))
+				.collect(Collectors.toList() );
+		
+		return customerDto  ;
 	}
 
 	@Override
