@@ -27,13 +27,13 @@ public class CustomerController {
 	@Autowired
 	ICustomerService customerService;
 	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')") //paso 8: autorizar la solicitud solo para Admin
+	//@PreAuthorize("hasAnyRole('ROLE_ADMIN')") //paso 8: autorizar la solicitud solo para Admin
 	@GetMapping //localhost:8080/api/customers
 	public List<CustomerDto> getAllCustomers(){
 		return customerService.getAllCustomersDto();		
 	}
 	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')") //paso 8
+	//@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')") //paso 8
 	@GetMapping("active") //localhost:8080/api/customers/active
 	public List<Customer> getAllActiveCustomers(){
 		return customerService.getAllActiveCustomers();

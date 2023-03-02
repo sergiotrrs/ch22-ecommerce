@@ -1,7 +1,10 @@
 package org.generation.app.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -17,6 +20,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true) // paso 7: habilitar los roles en los endpoints
 public class WebSecurityConfig {
+	
+	@Autowired // paso 11: inyectar una implementación de la interfaz
+	private UserDetailsService userDetailsService;
 	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http ) throws Exception {
@@ -35,7 +41,7 @@ public class WebSecurityConfig {
 	}
 	
 	// Paso 4: Crear usuario y contraseña en memoria
-	@Bean
+	//@Bean //paso 12: deshabilitar la carga de usuarios en memoria
 	public UserDetailsService userDetailsService() {
 		UserDetails juan = User.builder()
 				.username("juan")
@@ -53,10 +59,25 @@ public class WebSecurityConfig {
 		return new InMemoryUserDetailsManager(juan, luis);
 	}
 	
+	// paso 13: Incerceptamos el manejo de autenticación de los usuarios
+	@Bean
+	AuthenticationManager authManager(HttpSecurity http) throws Exception {
+		return http
+				.getSharedObject( AuthenticationManagerBuilder.class)
+				.userDetailsService( userDetailsService )
+				.passwordEncoder( passwordEncoder() )
+				.and()
+				.build();
+	}
+	
 	// paso 5: Crear el bean que codificará la contraseña
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();		
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("Password: " + new BCryptPasswordEncoder().encode("fierro"));
 	}
 
 }
