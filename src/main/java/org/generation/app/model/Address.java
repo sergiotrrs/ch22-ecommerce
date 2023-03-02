@@ -1,5 +1,7 @@
 package org.generation.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +28,7 @@ public class Address {
 	private String zipCode;
 	@Column(name="city", length= FIELD_MAX_LENGTH)
 	private String city;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="fk_id_customer")
 	private Customer fkIdCustomer;
