@@ -25,7 +25,12 @@ public class WebSecurityConfig {
 	private UserDetailsService userDetailsService;
 	
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http ) throws Exception {
+	public SecurityFilterChain filterChain(HttpSecurity http,
+			AuthenticationManager authManager) throws Exception {
+		
+		JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter();
+		jwtAuthenticationFilter.setAuthenticationManager(authManager);
+		jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 		
 		http
 			.httpBasic()
@@ -34,6 +39,9 @@ public class WebSecurityConfig {
 			.anyRequest() // .permitAll(); // paso 2: Deshabilitamos la seguridad
 			.authenticated() // paso 3: Habilitamos la seguridad
 			.and()
+			// ToDo Generar filtro para dar el token para los usuarios autenticados
+			.addFilter(jwtAuthenticationFilter)
+			// ToDo Verificar el token JWT para las peticiones http.
 			.csrf().disable();					
 		
 		return http.build();
@@ -77,7 +85,7 @@ public class WebSecurityConfig {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println("Password: " + new BCryptPasswordEncoder().encode("fierro"));
+		System.out.println("Password: " + new BCryptPasswordEncoder().encode("malote"));
 	}
 
 }
