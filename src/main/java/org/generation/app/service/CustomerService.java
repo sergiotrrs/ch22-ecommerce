@@ -5,19 +5,21 @@ import java.util.List;
 import org.generation.app.dto.CustomerDto;
 import org.generation.app.model.Customer;
 import org.generation.app.repository.ICustomerRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
+@AllArgsConstructor //Crea el método contructor para realizar la inyección de dependencias
 public class CustomerService implements ICustomerService {
 	
 	//@Autowired
 	private ICustomerRepository customerRepository;
 	//@Autowired
 	private CustomerDto customerDto;
+	private ModelMapper modelMapper;
 	
 	@Override
 	public List<Customer> getAllCustomers() {
@@ -43,11 +45,7 @@ public class CustomerService implements ICustomerService {
 		Customer customer = customerRepository.findById(idCustomer)
 				.orElseThrow( ()-> 
 				new IllegalStateException("User does not exist with id: " + idCustomer));				
-		customerDto.setFirstName(  customer.getFirstName()  );
-		customerDto.setLastName(  customer.getLastName()  );
-		customerDto.setEmail(  customer.getEmail()  );
-		customerDto.setAvatar(  customer.getAvatar()  );
-		customerDto.setIdCustomer(  customer.getIdCustomer()  );
+		CustomerDto customerDto = modelMapper.map(customer, CustomerDto.class);
 		
 		 return customerDto;
 	}
