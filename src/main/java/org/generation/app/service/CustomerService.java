@@ -8,14 +8,17 @@ import org.generation.app.repository.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class CustomerService implements ICustomerService {
 	
-	@Autowired
+	//@Autowired
 	private ICustomerRepository customerRepository;
-	@Autowired
+	//@Autowired
 	private CustomerDto customerDto;
-
+	
 	@Override
 	public List<Customer> getAllCustomers() {
 		List<Customer> allCustomers = (List<Customer>) customerRepository.findAll();
@@ -44,6 +47,7 @@ public class CustomerService implements ICustomerService {
 		customerDto.setLastName(  customer.getLastName()  );
 		customerDto.setEmail(  customer.getEmail()  );
 		customerDto.setAvatar(  customer.getAvatar()  );
+		customerDto.setIdCustomer(  customer.getIdCustomer()  );
 		
 		 return customerDto;
 	}
