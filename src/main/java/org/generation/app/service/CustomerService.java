@@ -12,8 +12,9 @@ import org.springframework.stereotype.Service;
 public class CustomerService implements ICustomerService {
 	
 	@Autowired
-	ICustomerRepository customerRepository;
-	
+	private ICustomerRepository customerRepository;
+	@Autowired
+	private CustomerDto customerDto;
 
 	@Override
 	public List<Customer> getAllCustomers() {
@@ -38,8 +39,7 @@ public class CustomerService implements ICustomerService {
 	public CustomerDto getCustomerDtoById(long idCustomer) {		
 		Customer customer = customerRepository.findById(idCustomer)
 				.orElseThrow( ()-> 
-				new IllegalStateException("User does not exist with id: " + idCustomer));		
-		CustomerDto customerDto = new CustomerDto();
+				new IllegalStateException("User does not exist with id: " + idCustomer));				
 		customerDto.setFirstName(  customer.getFirstName()  );
 		customerDto.setLastName(  customer.getLastName()  );
 		customerDto.setEmail(  customer.getEmail()  );
