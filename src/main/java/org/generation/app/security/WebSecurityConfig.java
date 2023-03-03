@@ -40,13 +40,14 @@ public class WebSecurityConfig {
 			.httpBasic()
 			.and()
 			.authorizeHttpRequests()
-			.anyRequest() // .permitAll(); // paso 2: Deshabilitamos la seguridad
-			.authenticated() // paso 3: Habilitamos la seguridad
+			.anyRequest().permitAll().and() // paso 2: Deshabilitamos la seguridad
+			/*.authenticated() // paso 3: Habilitamos la seguridad
 			.and()
 			//Filtro para dar el token para los usuarios autenticados
 			.addFilter(jwtAuthenticationFilter)
 			// ToDo Verificar el token JWT para las peticiones http.
-			.addFilterBefore( jwtAuthorizationFilter  , UsernamePasswordAuthenticationFilter.class)
+			.addFilterBefore( jwtAuthorizationFilter  , UsernamePasswordAuthenticationFilter.class) 
+			*/						
 			.csrf().disable();					
 		
 		return http.build();
