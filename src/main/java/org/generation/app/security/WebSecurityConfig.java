@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 // paso 1. personalizar la seguridad
 @SuppressWarnings("deprecation")
@@ -23,6 +24,9 @@ public class WebSecurityConfig {
 	
 	@Autowired // paso 11: inyectar una implementación de la interfaz
 	private UserDetailsService userDetailsService;
+	@Autowired
+	private JWTAuthorizationFilter jwtAuthorizationFilter;
+	
 	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http,
@@ -39,9 +43,10 @@ public class WebSecurityConfig {
 			.anyRequest() // .permitAll(); // paso 2: Deshabilitamos la seguridad
 			.authenticated() // paso 3: Habilitamos la seguridad
 			.and()
-			// ToDo Generar filtro para dar el token para los usuarios autenticados
+			//Filtro para dar el token para los usuarios autenticados
 			.addFilter(jwtAuthenticationFilter)
 			// ToDo Verificar el token JWT para las peticiones http.
+			.addFilterBefore( jwtAuthorizationFilter  , UsernamePasswordAuthenticationFilter.class)
 			.csrf().disable();					
 		
 		return http.build();
