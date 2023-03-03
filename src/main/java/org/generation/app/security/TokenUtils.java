@@ -61,13 +61,14 @@ public class TokenUtils {
 					.parserBuilder()
 					.setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
 					.build()
-					.parseClaimsJwt(token)
+					.parseClaimsJws(token)
 					.getBody();
 			String email = claims.getSubject();			
 			return new UsernamePasswordAuthenticationToken(email, null, Collections.emptyList() );
 			
 		} catch (Exception e) {
 			System.out.println(e);
+			System.out.println(token);
 			return null;
 		}
 	}
