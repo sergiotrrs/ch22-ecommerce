@@ -1,14 +1,13 @@
 package org.generation.app.service;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.generation.app.dto.CustomerDto;
 import org.generation.app.model.Customer;
 import org.generation.app.repository.ICustomerRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -17,11 +16,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor //Crea el método contructor para realizar la inyección de dependencias
 public class CustomerService implements ICustomerService {
 	
-	//@Autowired
 	private ICustomerRepository customerRepository;
-	//@Autowired
 	private CustomerDto customerDto;
-	private ModelMapper modelMapper;
+	private ModelMapper modelMapper;	
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public List<Customer> getAllCustomers() {
@@ -35,8 +33,7 @@ public class CustomerService implements ICustomerService {
 		
 		List<CustomerDto> customerDto = allCustomers.stream()
 				.map( customer -> modelMapper.map(customer, CustomerDto.class))
-				.collect(Collectors.toList() );
-		
+				.collect(Collectors.toList() );		
 		return customerDto  ;
 	}
 
@@ -72,11 +69,10 @@ public class CustomerService implements ICustomerService {
 		else if ( customer.getEmail().length() > Customer.FIELD_MAX_LENGTH )
 			throw new IllegalStateException("Email length is greater than: " + Customer.FIELD_MAX_LENGTH);
 
-		Customer newCustomer = customer;
-		newCustomer.setIdCustomer(0);
-		newCustomer.setActive(true);
-		
-		return customerRepository.save(newCustomer);
+		customer.setIdCustomer(0);
+		customer.setActive(true);
+		customer.setPassword( passwordEncoder.encode(customer.getPassword()));	
+		return customerRepository.save(customer);
 	}
 
 	@Override
